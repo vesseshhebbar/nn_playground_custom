@@ -40,6 +40,7 @@ export let datasets: {[key: string]: dataset.DataGenerator} = {
   "xor": dataset.classifyXORData,
   "gauss": dataset.classifyTwoGaussData,
   "spiral": dataset.classifySpiralData,
+  "empty": dataset.empty,
 };
 
 /** A map between dataset names and functions that generate regression data. */
@@ -131,7 +132,8 @@ export class State {
     {name: "problem", type: Type.OBJECT, keyMap: problems},
     {name: "initZero", type: Type.BOOLEAN},
     {name: "hideText", type: Type.BOOLEAN},
-    {name: "editColor", type: Type.NUMBER}
+    {name: "editColor", type: Type.NUMBER},
+    {name: "editTrain", type: Type.NUMBER}
   ];
 
   [key: string]: any;
@@ -162,6 +164,7 @@ export class State {
   cosY = false;
   sinY = false;
   editColor = -1;
+  editTrain = -1;
   dataset: dataset.DataGenerator = dataset.classifyCircleData;
   regDataset: dataset.DataGenerator = dataset.regressPlane;
   trainData: dataset.Example2D[] = [];

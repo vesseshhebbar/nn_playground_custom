@@ -163,6 +163,9 @@ limitations under the License.
           <div class="dataset" title="Spiral">
             <canvas class="data-thumbnail" data-dataset="spiral"></canvas>
           </div>
+          <div class="dataset" title="Empty">
+            <canvas class="data-thumbnail" data-dataset="empty"></canvas>
+          </div>
           <div class="dataset" title="Plane">
             <canvas class="data-thumbnail" data-regDataset="reg-plane"></canvas>
           </div>
@@ -285,6 +288,19 @@ limitations under the License.
           <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
             <input type="radio" name="color-choose" id="select-blue" value="-1">
             <span class="mdl-checkbox__label label">Blue</span>
+          </label>
+      </div>
+      <div id="select-trainOrTest" class="ui-paintPlatform">
+          <div class="label">
+              Paint Test Data or Train Data.
+          </div>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <input type="radio" name="test-choose" id="select-train" value="1" checked>
+            <span class="mdl-checkbox__label label">Train</span>
+          </label>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+            <input type="radio" name="test-choose" id="select-test" value="-1">
+            <span class="mdl-checkbox__label label">Test</span>
           </label>
       </div>
       <div style="float:left;margin-top:20px">

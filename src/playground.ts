@@ -276,6 +276,19 @@ function makeGUI() {
     userHasInteracted()
   });
 
+  // For changing state on different selections
+  d3.select("#select-train").on("change", function() {
+    state.editTrain = this.checked ? -1 : 1
+    state.serialize()
+    userHasInteracted()
+  });
+
+  d3.select("#select-test").on("change", function() {
+    state.editTrain = this.checked ? 1 : -1
+    state.serialize()
+    userHasInteracted()
+  });
+
   // On drag, we want to paint our canvas with the dots.
   let dragBehavior = d3.behavior.drag().on("drag", function() {
     let isVisible = d3.select("#select-platform").style("display") === "block"
@@ -289,8 +302,20 @@ function makeGUI() {
       y -= padding
       x = x/factor - maxScale
       y = maxScale - y/factor
-      state.trainData.push({x, y, label})
-      heatMap.updatePoints(state.trainData);
+
+      // Add Selected level of Noise to user's brush stroke.
+      // 0.04 seemed to hit the sweet spot for scaling the noise to suit the brush
+      x += randUniform(-1, 1) * state.noise * 0.04
+      y += randUniform(-1, 1) * state.noise * 0.04
+
+      if(state.editTrain === -1) {
+        state.trainData.push({x, y, label})
+        heatMap.updatePoints(state.trainData);
+      }
+      else {
+        state.testData.push({x, y, label})
+        heatMap.updateTestPoints(state.testData);
+      }
     }
   });
 
@@ -985,7 +1010,9 @@ function reset(onStartup=false) {
   togglePaintSelection()
   // Correct radio button on reset
   let radioColor = state.editColor === - 1 ? "#select-orange" : "#select-blue";
+  let radioTrain = state.editTrain === - 1 ? "#select-train" : "#select-test";
   d3.select(radioColor).attr("checked", "checked")
+  d3.select(radioTrain).attr("checked", "checked")
 
   // Make a simple network.
   iter = 0;
@@ -1129,6 +1156,15 @@ function generateData(firstTime = false) {
   heatMap.updatePoints(state.trainData);
   heatMap.updateTestPoints(state.showTestData ? state.testData : []);
 }
+
+/**
+ * Returns a sample from a uniform [a, b] distribution.
+ * Uses the seedrandom library as the random generator.
+ */
+function randUniform(a: number, b: number) {
+  return Math.random() * (b - a) + a;
+}
+
 
 let firstInteraction = true;
 let parametersChanged = false;

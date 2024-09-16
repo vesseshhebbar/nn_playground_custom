@@ -52,6 +52,12 @@ export function shuffle(array: any[]): void {
 
 export type DataGenerator = (numSamples: number, noise: number) => Example2D[];
 
+// Generate Empty Dataset that can be used to paint a custom function
+export function empty(numSamples: number, noise: number): Example2D[] {
+  let points: Example2D[] = [];
+  return points;
+}
+
 export function classifyTwoGaussData(numSamples: number, noise: number):
     Example2D[] {
   let points: Example2D[] = [];
